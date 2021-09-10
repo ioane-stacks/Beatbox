@@ -133,6 +133,7 @@ jQuery(function () {
                     if (audioId.paused) {
                         $(this).css('background-color', 'rgba(40, 67, 109, 1)');
                         audioId.play();
+                        onCurrentTime();
                         //if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
                         validate++;
                         if (enab == true) {

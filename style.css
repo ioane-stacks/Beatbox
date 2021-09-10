@@ -90,8 +90,8 @@ body {
 }
 
 .padBox {
-    width: 86.7vw;
-    height: 53.4vh;
+    width: 600px;
+    height: 350px;
     margin-top: 30px;
     background-color: #0e0e11;
     border: 1px solid #28436d;
@@ -102,7 +102,7 @@ body {
 }
 
 .padbox2 {
-    width: 84.4vw;
+    width: 584px;
     height: 51.4vh;
     margin-left: 1vw;
     margin-top: 1vw;
@@ -200,11 +200,11 @@ body {
     }
 
     .volumeBox {
-        height: 12.4vh;
+        height: 6vw;
     }
 
     .volume {
-        height: 12.4vh;
+        height: 6vw;
     }
 
     .time {
