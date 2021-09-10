@@ -51,7 +51,7 @@ body {
 .controlBox {
     width: auto;
     height: auto;
-    margin-top: 30px;
+    margin-top: 20px;
     padding: 1.2vw;
     margin-left: 3px;
     background-color: transparent;
@@ -91,8 +91,8 @@ body {
 
 .padBox {
     width: 600px;
-    height: 350px;
-    margin-top: 30px;
+    height: 300px;
+    margin-top: 20px;
     background-color: #0e0e11;
     border: 1px solid #28436d;
     border-radius: 3px;
