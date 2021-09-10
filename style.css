@@ -91,7 +91,7 @@ body {
 
 .padBox {
     width: 600px;
-    height: 300px;
+    height: 315px;
     margin-top: 10px;
     background-color: #0e0e11;
     border: 1px solid #28436d;
@@ -103,7 +103,7 @@ body {
 
 .padbox2 {
     width: 584px;
-    height: 51.4vh;
+    height: 300px;
     margin-left: 1vw;
     margin-top: 1vw;
     border: 1px solid #28436d;
@@ -111,10 +111,10 @@ body {
 }
 
 .key {
-    min-width: 63px;
-    height: 63px;
-    margin-left: 3.3vw;
-    margin-top: 3vw;
+    min-width: 87px;
+    height: 87px;
+    margin-left: 20px;
+    margin-top: 10px;
     display: inline-block;
     position: relative;
 }
@@ -138,7 +138,7 @@ body {
     width: 10px;
     height: 7vh;
     bottom: 3px;
-    margin-left: 5px;
+    margin-left: 6px;
     background-color: transparent;
     border: 1px solid #28436d;
     display: inline-block;
