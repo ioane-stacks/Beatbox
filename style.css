@@ -93,7 +93,7 @@ body {
     width: 600px;
     height: 315px;
     margin-top: 10px;
-    background-color: #0e0e11;
+    background-color: transparent;
     border: 1px solid #28436d;
     border-radius: 3px;
     position: relative;
@@ -102,11 +102,12 @@ body {
 }
 
 .padbox2 {
-    width: 584px;
-    height: 300px;
-    margin-left: 1vw;
-    margin-top: 1vw;
+    width: 587px;
+    height: 303px;
+    margin-left: 5px;
+    margin-top: 5px;
     border: 1px solid #28436d;
+    background-color: #0e0e11;
     position: absolute;
 }
 
@@ -136,7 +137,7 @@ body {
 
 .volumeBox {
     width: 10px;
-    height: 7vh;
+    height: 60px;
     bottom: 3px;
     margin-left: 6px;
     background-color: transparent;
@@ -154,7 +155,7 @@ body {
 
 .volume {
     width: 10px;
-    height: 7vh;
+    height: 60px;
     bottom: 0px;
     background-color: #4e75b4;
     border-radius: 10px;
@@ -181,13 +182,13 @@ body {
 
 @media screen and (min-width: 1366px) {
     .padBox {
-        width: 51.7vw;
-        height: 76.5vh;
-        margin-left: 1vw;
+        width: 685px;
+        height: 481px;
+        margin-left: 15px;
     }
     .padbox2 {
-        width: 49.2vw;
-        height: 71.4vh;
+        width: 673px;
+        height: 469px;
     }
     .key {
         min-width: 100px;
@@ -198,15 +199,12 @@ body {
     .sound {
         font-size: 24px;
     }
-
     .volumeBox {
-        height: 6vw;
+        height: 80px;
     }
-
     .volume {
-        height: 6vw;
+        height: 80px;
     }
-
     .time {
         font-size: 1.2vw;
     }

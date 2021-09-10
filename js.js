@@ -87,6 +87,7 @@ jQuery(function () {
         }
     });
 
+    var isBackEnabled = false;
     class Pad {
         constructor(className, audioId, k) {
             this.className = className;
@@ -188,17 +189,22 @@ jQuery(function () {
                             barHeight = barHeight * 3.7;
                         }
 
-                        $(`.${className}`).css('background-color', `rgba(${r},${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
-                        $(`.${className}`).css('box-shadow', `0 0 3px 3px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+
                         if (audioId.paused == true) {
                             $(`.${className}`).css('background-color', `transparent`);
                             $(`.${className}`).css('box-shadow', `none`);
                         }
+                        $(`.padBox`).css('background-color', `rgb(${r},${barHeight / 1.3},${barHeight})`);
+                        $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+                        $(`.${className}`).css('background-color', `rgba(${r},${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+                        $(`.${className}`).css('box-shadow', `0 0 3px 3px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+                        
                     }
                 }
 
                 audioId.play();
                 renderFrame();
+                
             }
         }
     }
