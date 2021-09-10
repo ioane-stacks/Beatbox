@@ -1,6 +1,6 @@
 jQuery(function () {
     var localTime = 0;
-    var gap = .08708;
+    var gap = .08048;
     var playerEnabled = false;
 
     var t1 = null;
@@ -32,6 +32,17 @@ jQuery(function () {
         $('.blr').css('filter', 'blur(0px)');
         playerEnabled = true;
     });
+
+    //Temporary
+    function pl() {
+        l.muted = true;
+        l.play();
+        $('.pad').css('display', 'none');
+        $('.blr').css('filter', 'blur(0px)');
+        playerEnabled = true;
+    }
+    pl();
+    // ------------------------
 
     $('.mute').on('click', function () {
         Mute();
@@ -96,9 +107,9 @@ jQuery(function () {
                         if (e.key == k) {
                             if (audioId.paused) {
                                 $(`.${className}`).css('background-color', 'rgba(40, 67, 109, 1)');
-                                audioId.currentTime = localTime;
                                 audioId.play();
-                                if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
+                                onCurrentTime();
+                                //if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
                                 validate++;
                                 if (enab == true) {
                                     KeyEffector(className, audioId);
@@ -121,8 +132,8 @@ jQuery(function () {
                 $(`.${className}`).on('click', function () {
                     if (audioId.paused) {
                         $(this).css('background-color', 'rgba(40, 67, 109, 1)');
-                        audioId.currentTime = localTime;
                         audioId.play();
+                        //if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
                         validate++;
                         if (enab == true) {
                             KeyEffector(className, audioId);
@@ -258,7 +269,7 @@ jQuery(function () {
             }
 
             $(`.${volumeId}`).css('height', `${currentHeight}px`);
-            Volume = currentHeight / 80;
+            Volume = currentHeight / $(`.${volumeBoxId}`).height();
             audioId.volume = Volume;
         });
 
@@ -281,7 +292,7 @@ jQuery(function () {
 
                 $(`.${volumeId}`).css('height', `${currentHeight}px`);
 
-                Volume = currentHeight / 80;
+                Volume = currentHeight / $(`.${volumeBoxId}`).height();
 
                 if (Volume >= 0.99) {
                     Volume = 1;
