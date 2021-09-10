@@ -36,7 +36,7 @@ jQuery(function () {
     //Temporary
     function pl() {
         l.muted = true;
-        l.play();
+        //l.play();
         $('.pad').css('display', 'none');
         $('.blr').css('filter', 'blur(0px)');
         playerEnabled = true;
@@ -87,7 +87,7 @@ jQuery(function () {
         }
     });
 
-    var isBackEnabled = false;
+    var test;
     class Pad {
         constructor(className, audioId, k) {
             this.className = className;
@@ -169,11 +169,10 @@ jQuery(function () {
                 var dataArray = new Uint8Array(bufferLength);
 
                 var barHeight;
-                var x = 0.7;
+                var x =0.7;
 
                 function renderFrame() {
                     requestAnimationFrame(renderFrame);
-
 
                     analyser.getByteFrequencyData(dataArray);
 
@@ -182,6 +181,7 @@ jQuery(function () {
                         if (barHeight < 200) {
                             barHeight = barHeight - 110;
                         }
+                        
 
                         var r = 5 * (barHeight / bufferLength);
 
@@ -189,25 +189,33 @@ jQuery(function () {
                             barHeight = barHeight * 3.7;
                         }
 
-
+                        
                         if (audioId.paused == true) {
                             $(`.${className}`).css('background-color', `transparent`);
                             $(`.${className}`).css('box-shadow', `none`);
                         }
-                        $(`.padBox`).css('background-color', `rgb(${r},${barHeight / 1.3},${barHeight})`);
-                        $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+                        else {
+                            if ( barHeight < 256) {
+                                test = barHeight;
+                            }
+                        }
+
                         $(`.${className}`).css('background-color', `rgba(${r},${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
-                        $(`.${className}`).css('box-shadow', `0 0 3px 3px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
-                        
+                        $(`.${className}`).css('box-shadow', `0 0 10px -1px rgba(0,${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
+
                     }
                 }
 
                 audioId.play();
                 renderFrame();
-                
             }
         }
     }
+
+    setInterval(() => {
+        $(`.padBox`).css('background-color', `rgb(${0},${test / 1.3},${test})`);
+        $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${test / 1.3},${test}, ${test / 255})`);
+    }, 30);
     //ARPs
     var p1 = new Pad('sound1', a1, 'q').Start();
     var p2 = new Pad('sound2', a2, 'w').Start();
