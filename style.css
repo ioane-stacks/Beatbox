@@ -69,7 +69,7 @@ body {
     margin-bottom: 10px;
     background-color: transparent;
     border: 1px solid #28436d;
-    color: #16263f;
+    color: #1b3358;
     border-radius: 50%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 12px;
@@ -99,6 +99,7 @@ body {
     position: relative;
     display: inline-block;
     vertical-align: text-top;
+    transition: 0.23s;
 }
 
 .padbox2 {
@@ -125,7 +126,7 @@ body {
     height: 100%;
     background-color: transparent;
     border: 1px solid #28436d;
-    color: #16263f;
+    color: #1b3358;
     border-radius: 7%;
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
@@ -206,6 +207,6 @@ body {
         height: 80px;
     }
     .time {
-        font-size: 1.2vw;
+        font-size: 12px;
     }
 }

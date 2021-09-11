@@ -3,9 +3,6 @@ jQuery(function () {
     var gap = .08048;
     var playerEnabled = false;
 
-    var t1 = null;
-    var t2 = null;
-
     var validate = 0;
 
     var l = document.getElementById('l');
@@ -87,7 +84,7 @@ jQuery(function () {
         }
     });
 
-    var test;
+    var padBcol;
     class Pad {
         constructor(className, audioId, k) {
             this.className = className;
@@ -110,7 +107,6 @@ jQuery(function () {
                                 $(`.${className}`).css('background-color', 'rgba(40, 67, 109, 1)');
                                 audioId.play();
                                 onCurrentTime();
-                                //if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
                                 validate++;
                                 if (enab == true) {
                                     KeyEffector(className, audioId);
@@ -135,7 +131,6 @@ jQuery(function () {
                         $(this).css('background-color', 'rgba(40, 67, 109, 1)');
                         audioId.play();
                         onCurrentTime();
-                        //if (currentId != null) { audioId.currentTime = currentId.currentTime + gap; }
                         validate++;
                         if (enab == true) {
                             KeyEffector(className, audioId);
@@ -169,7 +164,7 @@ jQuery(function () {
                 var dataArray = new Uint8Array(bufferLength);
 
                 var barHeight;
-                var x =0.7;
+                var x = 0.7;
 
                 function renderFrame() {
                     requestAnimationFrame(renderFrame);
@@ -181,7 +176,10 @@ jQuery(function () {
                         if (barHeight < 200) {
                             barHeight = barHeight - 110;
                         }
-                        
+                        if (barHeight <= 0) {
+                            barHeight = 0;
+                        }
+
 
                         var r = 5 * (barHeight / bufferLength);
 
@@ -189,15 +187,29 @@ jQuery(function () {
                             barHeight = barHeight * 3.7;
                         }
 
-                        
+
                         if (audioId.paused == true) {
                             $(`.${className}`).css('background-color', `transparent`);
                             $(`.${className}`).css('box-shadow', `none`);
+                            $(`.padBox`).css('box-shadow', `none`);
                         }
                         else {
-                            if ( barHeight < 256) {
-                                test = barHeight;
+                            if (barHeight > 120 && barHeight < 256) {
+                                padBcol = barHeight;
+                                $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
+                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
                             }
+                            if (barHeight > 65 && barHeight < 120) {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / 3},${0},${padBcol / 3})`);
+                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgb(${padBcol / 3},${0},${padBcol / 1.2})`);
+                            }
+                            if (barHeight > 20 && barHeight < 65) {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
+                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
+                            }
+                            
+
+
                         }
 
                         $(`.${className}`).css('background-color', `rgba(${r},${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
@@ -213,8 +225,7 @@ jQuery(function () {
     }
 
     setInterval(() => {
-        $(`.padBox`).css('background-color', `rgb(${0},${test / 1.3},${test})`);
-        $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${test / 1.3},${test}, ${test / 255})`);
+
     }, 30);
     //ARPs
     var p1 = new Pad('sound1', a1, 'q').Start();
@@ -336,7 +347,8 @@ jQuery(function () {
     var currentId = null;
     function ValidateTime() {
         if (validate == 0) {
-            currentId == null;
+            currentId = null;
+            $(`.padBox`).css('background-color', `transparent`);
         }
         if (currentId != null) {
             if (currentId.paused == true) {
