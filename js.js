@@ -115,6 +115,7 @@ jQuery(function () {
                             if (audioId.paused) {
                                 $(`.${className}`).css('background-color', 'rgba(40, 67, 109, 1)');
                                 audioId.play();
+                                audioId.currentTime = localTime;
                                 onCurrentTime();
                                 validate++;
                                 if (enab == true) {
@@ -139,6 +140,7 @@ jQuery(function () {
                     if (audioId.paused) {
                         $(this).css('background-color', 'rgba(40, 67, 109, 1)');
                         audioId.play();
+                        audioId.currentTime = localTime;
                         onCurrentTime();
                         validate++;
                         if (enab == true) {
