@@ -3,6 +3,15 @@ jQuery(function () {
     var gap = .08048;
     var playerEnabled = false;
 
+    var scrWidth, scrHeight;
+
+    scrWidth = parseInt(window.getComputedStyle(document.body).getPropertyValue('width'));
+    scrHeight = parseInt(window.getComputedStyle(document.body).getPropertyValue('height'));
+
+    if(scrHeight > scrWidth) {
+        alert("Please rotate screen!");
+    }
+
     var validate = 0;
 
     var l = document.getElementById('l');
