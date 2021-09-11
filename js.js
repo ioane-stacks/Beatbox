@@ -207,7 +207,7 @@ jQuery(function () {
                                 $(`.padBox`).css('background-color', `rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
                                 $(`.padBox`).css('box-shadow', `0 0 10px -1px rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
                             }
-                            
+
 
 
                         }
@@ -286,17 +286,28 @@ jQuery(function () {
         var Volume = 1;
         $(`.${volumeBoxId}`).on('mousedown', function (e) {
             mouseDown = true;
+            var r, g, b;
 
             if (e.target.className == $(`.${volumeId}`).attr('class')) {
                 currentHeight = $(`.${volumeId}`).height() - e.offsetY;
+                setColor();
             }
             else {
                 currentHeight = $(this).height() - e.offsetY;
+                setColor();
             }
 
             $(`.${volumeId}`).css('height', `${currentHeight}px`);
+            $(`.${volumeId}`).css('background-color', `rgb(0,0,${vColor})`);
             Volume = currentHeight / $(`.${volumeBoxId}`).height();
             audioId.volume = Volume;
+            function setColor() {
+                r = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 104);
+                g = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 148);
+                b = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 208);
+                $(`.${volumeId}`).css('background-color', `rgb(${r},${g},${b})`);
+            }
+            
         });
 
         $(`.${volumeBoxId}`).on('mouseup', function () {
@@ -327,6 +338,10 @@ jQuery(function () {
                     Volume = 0;
                 }
                 audioId.volume = Volume;
+                var r = Math.round(($(`.${volumeId}`).height() / $(`.${volumeBoxId}`).height()) * 104);
+                var g = Math.round(($(`.${volumeId}`).height() / $(`.${volumeBoxId}`).height()) * 148);
+                var b = Math.round(($(`.${volumeId}`).height() / $(`.${volumeBoxId}`).height()) * 208);
+                $(`.${volumeId}`).css('background-color', `rgb(${r},${g},${b})`);
             }
         });
 
