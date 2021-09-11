@@ -309,7 +309,6 @@ jQuery(function () {
             }
 
             $(`.${volumeId}`).css('height', `${currentHeight}px`);
-            $(`.${volumeId}`).css('background-color', `rgb(0,0,${vColor})`);
             Volume = currentHeight / $(`.${volumeBoxId}`).height();
             audioId.volume = Volume;
             function setColor() {
