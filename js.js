@@ -8,7 +8,7 @@ jQuery(function () {
     scrWidth = parseInt(window.getComputedStyle(document.body).getPropertyValue('width'));
     scrHeight = parseInt(window.getComputedStyle(document.body).getPropertyValue('height'));
 
-    if(scrHeight > scrWidth) {
+    if (scrHeight > scrWidth) {
         alert("Please rotate screen!");
     }
 
@@ -90,6 +90,7 @@ jQuery(function () {
         if (e.key == ' ') {
             e.preventDefault();
             onCurrentTime();
+            ValidateTime();
         }
     });
 
@@ -194,6 +195,7 @@ jQuery(function () {
 
                         var r = 5 * (barHeight / bufferLength);
 
+
                         if (audioId == a4) {
                             barHeight = barHeight * 3.7;
                         }
@@ -205,18 +207,28 @@ jQuery(function () {
                             $(`.padBox`).css('box-shadow', `none`);
                         }
                         else {
-                            if (barHeight > 120 && barHeight < 256) {
-                                padBcol = barHeight;
+                            if (barHeight > 35 && barHeight < 256) {
+                                if(audioId) {
+                                    padBcol = barHeight;
+                                    if (barHeight < 230) {
+                                        padBcol = barHeight - (padBcol / 1.7);
+                                    }
+                                }
+                                else {
+                                    padBcol = barHeight;
+                                }
+                            }
+                            if (padBcol > 120 && padBcol < 256) {
                                 $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
-                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
                             }
-                            if (barHeight > 65 && barHeight < 120) {
-                                $(`.padBox`).css('background-color', `rgb(${padBcol / 3},${0},${padBcol / 3})`);
-                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgb(${padBcol / 3},${0},${padBcol / 1.2})`);
+                            else if (padBcol > 65 && padBcol < 120) {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / .4},${0},${padBcol / 2})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .4},${0},${padBcol / 2})`);
                             }
-                            if (barHeight > 20 && barHeight < 65) {
-                                $(`.padBox`).css('background-color', `rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
-                                $(`.padBox`).css('box-shadow', `0 0 10px -1px rgb(${padBcol / 1.3},${0},${padBcol / 5.7})`);
+                            else {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / .2},${padBcol / .2},${0})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .2},${padBcol / .2},${0})`);
                             }
 
 
@@ -249,6 +261,7 @@ jQuery(function () {
     var p8 = new Pad('sound8', b3, 'd').Start();
     var p9 = new Pad('sound9', b4, 'f').Start();
     var p10 = new Pad('sound10', b5, 'g').Start();
+    var p11 = new Pad('sound11', c1, 'z').Start();
 
 
     setInterval(function () {
@@ -301,24 +314,31 @@ jQuery(function () {
 
             if (e.target.className == $(`.${volumeId}`).attr('class')) {
                 currentHeight = $(`.${volumeId}`).height() - e.offsetY;
-                setColor();
             }
             else {
                 currentHeight = $(this).height() - e.offsetY;
-                setColor();
+            }
+
+            if(currentHeight < 10){
+                currentHeight = 10;
             }
 
             $(`.${volumeId}`).css('height', `${currentHeight}px`);
-            $(`.${volumeId}`).css('background-color', `rgb(0,0,${vColor})`);
             Volume = currentHeight / $(`.${volumeBoxId}`).height();
-            audioId.volume = Volume;
-            function setColor() {
-                r = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 104);
-                g = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 148);
-                b = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 208);
-                $(`.${volumeId}`).css('background-color', `rgb(${r},${g},${b})`);
+
+            if (Volume >= 0.99) {
+                Volume = 1;
             }
-            
+            if (Volume <= 0.125) {
+                Volume = 0;
+            }
+
+            audioId.volume = Volume;
+            r = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 104);
+            g = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 148);
+            b = Math.round((currentHeight / $(`.${volumeBoxId}`).height()) * 208);
+            $(`.${volumeId}`).css('background-color', `rgb(${r},${g},${b})`);
+
         });
 
         $(`.${volumeBoxId}`).on('mouseup', function () {
@@ -338,6 +358,9 @@ jQuery(function () {
                     currentHeight = $(this).height() - e.offsetY;
                 }
 
+                if(currentHeight < 10){
+                    currentHeight = 10;
+                }
                 $(`.${volumeId}`).css('height', `${currentHeight}px`);
 
                 Volume = currentHeight / $(`.${volumeBoxId}`).height();
@@ -345,7 +368,7 @@ jQuery(function () {
                 if (Volume >= 0.99) {
                     Volume = 1;
                 }
-                if (Volume <= 0.01) {
+                if (Volume <= 0.125) {
                     Volume = 0;
                 }
                 audioId.volume = Volume;
@@ -421,9 +444,11 @@ jQuery(function () {
             if (b4.paused == false) { b4.currentTime = currentId.currentTime; }
             if (b5.paused == false) { b5.currentTime = currentId.currentTime; }
 
-            if (c1.paused == false) { a1.currentTime = currentId.currentTime; }
+            if (c1.paused == false) { c1.currentTime = currentId.currentTime; }
+
             console.log('currentTime -> ' + currentId.currentTime);
         }
+        CorrectTime();
     }
 
     //TIME END;
@@ -440,5 +465,7 @@ jQuery(function () {
     VolumeCtrl(b3, 'v8', 'vb8');
     VolumeCtrl(b4, 'v9', 'vb9');
     VolumeCtrl(b5, 'v10', 'vb10');
+
+    VolumeCtrl(c1, 'v11', 'vb11');
 
 });
