@@ -164,7 +164,6 @@ jQuery(function () {
                 var context = new AudioContext();;
                 var src = context.createMediaElementSource(audioId);
                 var analyser = context.createAnalyser();
-                var isPaused = false;
 
                 src.connect(analyser);
                 analyser.connect(context.destination);
@@ -177,6 +176,7 @@ jQuery(function () {
 
                 var barHeight;
                 var x = 0.7;
+                var count = 0;
 
                 function renderFrame() {
                     requestAnimationFrame(renderFrame);
@@ -207,32 +207,33 @@ jQuery(function () {
                             $(`.padBox`).css('box-shadow', `none`);
                         }
                         else {
+                            //padBox background
                             if (barHeight > 35 && barHeight < 256) {
-                                if(audioId) {
-                                    padBcol = barHeight;
-                                    if (barHeight < 230) {
-                                        padBcol = barHeight - (padBcol / 1.7);
-                                    }
+                                padBcol = barHeight;
+                                if (barHeight < 230) {
+                                    padBcol = barHeight - (padBcol / 1.7);
+                                    count = 0;
+                                }
+                                if (barHeight == 255) {
+                                    count++;
+                                    if (count >= 60) padBcol = 0;
+                                    if ( count >= 500) count = 0;
+                                }
+                            }
+                            if (padBcol > 35) {
+                                if (padBcol > 120 && padBcol < 256) {
+                                    $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
+                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
+                                }
+                                else if (padBcol > 65 && padBcol < 120) {
+                                    $(`.padBox`).css('background-color', `rgb(${padBcol / .4},${0},${padBcol / 2})`);
+                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .4},${0},${padBcol / 2})`);
                                 }
                                 else {
-                                    padBcol = barHeight;
+                                    $(`.padBox`).css('background-color', `rgb(${padBcol / .2},${padBcol / .2},${0})`);
+                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .2},${padBcol / .2},${0})`);
                                 }
                             }
-                            if (padBcol > 120 && padBcol < 256) {
-                                $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
-                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
-                            }
-                            else if (padBcol > 65 && padBcol < 120) {
-                                $(`.padBox`).css('background-color', `rgb(${padBcol / .4},${0},${padBcol / 2})`);
-                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .4},${0},${padBcol / 2})`);
-                            }
-                            else {
-                                $(`.padBox`).css('background-color', `rgb(${padBcol / .2},${padBcol / .2},${0})`);
-                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .2},${padBcol / .2},${0})`);
-                            }
-
-
-
                         }
 
                         $(`.${className}`).css('background-color', `rgba(${r},${barHeight / 1.3},${barHeight}, ${barHeight / 255})`);
@@ -262,6 +263,7 @@ jQuery(function () {
     var p9 = new Pad('sound9', b4, 'f').Start();
     var p10 = new Pad('sound10', b5, 'g').Start();
     var p11 = new Pad('sound11', c1, 'z').Start();
+
 
 
     setInterval(function () {
@@ -319,7 +321,7 @@ jQuery(function () {
                 currentHeight = $(this).height() - e.offsetY;
             }
 
-            if(currentHeight < 10){
+            if (currentHeight < 10) {
                 currentHeight = 10;
             }
 
@@ -358,7 +360,7 @@ jQuery(function () {
                     currentHeight = $(this).height() - e.offsetY;
                 }
 
-                if(currentHeight < 10){
+                if (currentHeight < 10) {
                     currentHeight = 10;
                 }
                 $(`.${volumeId}`).css('height', `${currentHeight}px`);
@@ -414,20 +416,36 @@ jQuery(function () {
         }
     }
 
+    var rowPriority = 0;
+
+    function AudioPriority() {
+        CorrectTime();
+        if (!a1.paused || !a2.paused || !a3.paused || !a4.paused || !a5.paused) { return rowPriority = 1 }
+        else if (rowPriority != 1 && (!b1.paused || !b2.paused || !b3.paused || !b4.paused || !b5.paused)) return rowPriority = 2;
+        else if ((rowPriority < 1 < 2) && (!c1.paused)) return rowPriority = 3;
+        else return rowPriority = 0;
+    }
+    setInterval(() => { AudioPriority(); console.log(AudioPriority() + " " + currentId.id); }, 1000);
+
     function CorrectTime() {
-        if (a1.paused == false) { currentId = a1; }
-        if (a2.paused == false) { currentId = a2; }
-        if (a3.paused == false) { currentId = a3; }
-        if (a4.paused == false) { currentId = a4; }
-        if (a5.paused == false) { currentId = a5; }
-
-        if (b1.paused == false) { currentId = b1; }
-        if (b2.paused == false) { currentId = b2; }
-        if (b3.paused == false) { currentId = b3; }
-        if (b4.paused == false) { currentId = b4; }
-        if (b5.paused == false) { currentId = b5; }
-
-        if (c1.paused == false) { currentId = c1; }
+        if (rowPriority == 1) {
+            if (a1.paused == false) { currentId = a1; }
+            if (a2.paused == false) { currentId = a2; }
+            if (a3.paused == false) { currentId = a3; }
+            if (a4.paused == false) { currentId = a4; }
+            if (a5.paused == false) { currentId = a5; }
+        }
+        else if (rowPriority == 2) {
+            if (b1.paused == false) { currentId = b1; }
+            if (b2.paused == false) { currentId = b2; }
+            if (b3.paused == false) { currentId = b3; }
+            if (b4.paused == false) { currentId = b4; }
+            if (b5.paused == false) { currentId = b5; }
+        }
+        else if (rowPriority == 3) {
+            if (c1.paused == false) { currentId = c1; }
+        }
+        return currentId;
     }
 
     function onCurrentTime() {
