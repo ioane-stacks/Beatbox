@@ -216,8 +216,9 @@ jQuery(function () {
                                 }
                                 if (barHeight == 255) {
                                     count++;
-                                    if (count >= 60) padBcol = 0;
+                                    if (count >= 5) padBcol = 0;
                                     if ( count >= 500) count = 0;
+                                    console.log(count);
                                 }
                             }
                             if (padBcol > 35) {
