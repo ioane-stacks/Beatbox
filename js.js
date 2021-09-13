@@ -425,7 +425,7 @@ jQuery(function () {
         else if ((rowPriority < 1 < 2) && (!c1.paused)) return rowPriority = 3;
         else return rowPriority = 0;
     }
-    setInterval(() => { AudioPriority(); console.log(AudioPriority() + " " + currentId.id); }, 1000);
+    setInterval(AudioPriority, 1000);
 
     function CorrectTime() {
         if (rowPriority == 1) {
