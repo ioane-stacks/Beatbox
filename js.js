@@ -191,11 +191,7 @@ jQuery(function () {
                         if (barHeight <= 0) {
                             barHeight = 0;
                         }
-
-
                         var r = 5 * (barHeight / bufferLength);
-
-
                         if (audioId == a4) {
                             barHeight = barHeight * 3.7;
                         }
@@ -207,33 +203,31 @@ jQuery(function () {
                             $(`.padBox`).css('box-shadow', `none`);
                         }
                         else {
-                            //padBox background
+                            //padBox background visualizer
                             if (barHeight > 35 && barHeight < 256) {
                                 padBcol = barHeight;
-                                if (barHeight < 230) {
-                                    padBcol = barHeight - (padBcol / 1.7);
+                                if (barHeight < 235) {
+                                    padBcol = barHeight - (padBcol / 1.66);
                                     count = 0;
                                 }
-                                if (barHeight == 255) {
+                                if (rowPriority == 1 && barHeight == 255) {
                                     count++;
-                                    if (count >= 5) padBcol = 0;
+                                    if (count >= 3) padBcol = 0;
                                     if ( count >= 500) count = 0;
                                     console.log(count);
                                 }
                             }
-                            if (padBcol > 35) {
-                                if (padBcol > 120 && padBcol < 256) {
-                                    $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
-                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
-                                }
-                                else if (padBcol > 65 && padBcol < 120) {
-                                    $(`.padBox`).css('background-color', `rgb(${padBcol / .4},${0},${padBcol / 2})`);
-                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .4},${0},${padBcol / 2})`);
-                                }
-                                else {
-                                    $(`.padBox`).css('background-color', `rgb(${padBcol / .2},${padBcol / .2},${0})`);
-                                    $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .2},${padBcol / .2},${0})`);
-                                }
+                            if (padBcol > 120 && padBcol < 256) {
+                                $(`.padBox`).css('background-color', `rgb(${0},${padBcol / 1.3},${padBcol})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgba(0,${padBcol / 1.3},${padBcol}, ${padBcol / 255})`);
+                            }
+                            else if (padBcol >= 85 && padBcol < 160) {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / .4},${0},${padBcol / 2})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .4},${0},${padBcol / 2})`);
+                            }
+                            else if (padBcol >= 0 && padBcol < 85) {
+                                $(`.padBox`).css('background-color', `rgb(${padBcol / .2},${padBcol / .2},${0})`);
+                                $(`.padBox`).css('box-shadow', `0 0 15px -1px rgb(${padBcol / .2},${padBcol / .2},${0})`);
                             }
                         }
 
