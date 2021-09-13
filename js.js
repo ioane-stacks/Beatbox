@@ -214,7 +214,6 @@ jQuery(function () {
                                     count++;
                                     if (count >= 3) padBcol = 0;
                                     if ( count >= 500) count = 0;
-                                    console.log(count);
                                 }
                             }
                             if (padBcol > 120 && padBcol < 256) {
