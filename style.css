@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -17,14 +18,14 @@ body {
 .blr {
     filter: blur(8px);
     position: absolute;
-    display: flex;
-    align-items: center;
 }
 
 @media screen and (min-width: 900px) {
     .blr {
         width: 100%;
         height: 100%;
+        display: flex;
+        align-items: center;
     }
 
     .container {
@@ -65,16 +66,16 @@ body {
 }
 
 .controlBox {
-    width: auto;
-    height: auto;
-    margin-top: 10px;
-    padding: 1.2vw;
-    margin-left: 3px;
+    width: 70px;
+    height: 70px;
+    padding: 30px;
     background-color: transparent;
     border: 1px solid #28436d;
     border-radius: 3px;
     position: relative;
     display: inline-block;
+    align-items: center;
+    text-align: center;
     vertical-align: text-top;
     background-color: transparent;
 }
@@ -82,7 +83,6 @@ body {
 .control {
     width: 40px;
     height: 40px;
-    margin-bottom: 10px;
     background-color: transparent;
     border: 1px solid #28436d;
     color: #1b3358;
@@ -91,8 +91,14 @@ body {
     font-size: 12px;
     cursor: pointer;
     transition: 0.3s;
-    position: relative;
+    position: absolute;
     display: block;
+}
+
+.controlBox .control {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .control:hover {
@@ -108,7 +114,6 @@ body {
 .padBox {
     width: 600px;
     height: 315px;
-    margin-top: 10px;
     text-align: start;
     background-color: transparent;
     border: 1px solid #28436d;
@@ -208,7 +213,6 @@ body {
     .padBox {
         width: 685px;
         height: 361px;
-        margin-left: 15px;
     }
 
     .padbox2 {
@@ -257,6 +261,7 @@ body {
     width: auto;
     height: 40px;
     padding: 10px;
+    padding: 30px;
     border: 1px solid #28436d;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
