@@ -240,6 +240,19 @@ body {
     }
 }
 
+@media screen and (min-width: 1920px) {
+    .padBox {
+        width: 737px;
+        height: 384px;
+        margin-left: 15px;
+    }
+
+    .padbox2 {
+        width: 725px;
+        height: 372px;
+    }
+}
+
 .cr-time {
     width: auto;
     height: 40px;
