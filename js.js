@@ -41,10 +41,10 @@ jQuery(function () {
 
     //Temporary
     function pl() {
-        l.muted = true;
+        l.muted = false;
         //l.play();
-        $('.pad').css('display', 'none');
-        $('.blr').css('filter', 'blur(0px)');
+        $('.pad').css('display', 'static');
+        $('.blr').css('filter', 'blur(10px)');
         playerEnabled = true;
     }
     pl();
@@ -213,7 +213,7 @@ jQuery(function () {
                                 if (rowPriority == 1 && barHeight == 255) {
                                     count++;
                                     if (count >= 3) padBcol = 0;
-                                    if ( count >= 500) count = 0;
+                                    if (count >= 500) count = 0;
                                 }
                             }
                             if (padBcol > 120 && padBcol < 256) {
