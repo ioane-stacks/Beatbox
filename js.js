@@ -41,7 +41,7 @@ jQuery(function () {
 
     //Temporary
     function pl() {
-        l.muted = false;
+        l.muted = true;
         //l.play();
         $('.pad').css('display', 'static');
         $('.blr').css('filter', 'blur(10px)');
@@ -83,7 +83,7 @@ jQuery(function () {
         b5.pause();
     });
 
-    $('.curTime').on('click', function () {
+    $('#curTime').on('click', function () {
         onCurrentTime();
     });
     $('html, body').on('keydown', function (e) {
